@@ -18,30 +18,31 @@
 			<p:ajax event="toggle" />
 			<p:panelGrid columns="2">
 				<label>Name</label>
-				<p:inputText id="name" value="#{employeeListView.employee.empName}" />
+				 <p:inputText id="name" value="#{employeeListView.employee.empName}" /> 
 				
 				<label>Address</label>
-				<p:inputText id="address" value="#{employeeListView.employee.address}" />
+				 <p:inputText id="address" value="#{employeeListView.employee.address}" /> 
 				
 				<label>Department</label>
-	            <p:selectOneMenu id="department" value="#{employeeListView.department}" style="width:150px">
+	            <p:selectOneMenu id="department" value="#{employeeListView.depObj.departmentId}" 
+	            style="width:150px" >
 	                <f:selectItem itemLabel="Select Department" itemValue="" noSelectionOption="true" />
 	                <f:selectItems value="#{employeeListView.departmentList}"  
 	                 var="depppt" itemValue="#{depppt.departmentId}" itemLabel="#{depppt.departmentName}"/>
 	            </p:selectOneMenu>
-				<p:commandButton id="addEmployeeButton"
+				<h:commandButton id="addEmployeeButton" 
 					action="#{employeeListView.addEmployee}"
 					update="cars1 :carsTable:cars2" value="Add Employee">
-				</p:commandButton>
+				</h:commandButton>
 			</p:panelGrid>
 		</p:fieldset>
 		<br></br>
 	</h:form>
 	<h:form id="carsTable">
-		<p:dataTable id="cars2" var="employee" value="#{EmployeeListController.employeeList}"
+		<p:dataTable id="cars2" var="employee" value="#{employeeListView.employeeList}"
 			scrollable="true" scrollHeight="100%" editable="true"
 			style="margin-bottom:20px">
-			<p:ajax event="rowEdit" listener="${EmployeeListController.onRowEdit}"
+			<p:ajax event="rowEdit" listener="${employeeListView.onRowEdit}"
 				update="cars2" />
 			<f:facet name="header">
           Employees
@@ -66,6 +67,7 @@
 					</f:facet>
 				</p:cellEditor>
 			</p:column>
+			
 			<p:column headerText="Edit" style="width:50px">
 				<p:rowEditor />
 			</p:column>

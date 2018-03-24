@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -22,7 +21,6 @@ import com.codenotfound.primefaces.repository.EmployeeRepository;
 
 @Named
 @ViewScoped
-@ManagedBean
 public class EmployeeListView implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -37,40 +35,46 @@ public class EmployeeListView implements Serializable{
 	private String department ;
 	private Department depObj;
 	private List<Employee> employeeList;
-	private List<Department> departmentList;
+	private List<Department> departmentList ;
 
 	
 	@PostConstruct
     public void init() {
 			employeeList = employeeRepository.findAll();
-	    	departmentList = departmentRepository.findAll();
+			departmentList = departmentRepository.findAll();
+	    	depObj = new Department();
+	    	employee = new Employee();
     }
 
 
 	public String addEmployee() {
 		try
 		{
-			//depObj.findb
-		//	employee.setDepartment(items.get(department));
+			if(depObj.getDepartmentId() != null){
+				depObj = departmentRepository.findByDepartmentId(depObj.getDepartmentId());
+			}
+			employee.setDepartment(depObj);
 			employeeRepository.save(employee);
-			setEmployeeList(employeeRepository.findAll());
 			FacesContext.getCurrentInstance().addMessage(null, 
 					new FacesMessage("Employee "+this.employee.getEmpName()+" Is Added Successfully"));
+			init();
+			System.out.println("end");
 		}
 		catch(Exception e)
 		{
 			e.getMessage();
+			System.out.println("catch");
 		}
 		return "";
 	}
 	
-	public String deleteEmployee(Employee car) {
+	public String deleteEmployee(Employee empl) {
 		try
 		{
-			employeeRepository.delete(employee);
-			setEmployeeList(employeeRepository.findAll());
+			employeeRepository.delete(empl);
 			FacesContext.getCurrentInstance().addMessage(null, 
 					new FacesMessage("The Car "+ this.employee.getEmpName()+" Is Deleted Successfully"));
+			init();
 		}
 		catch(Exception e)
 		{
@@ -150,6 +154,17 @@ public class EmployeeListView implements Serializable{
 	}
 
 
+	public Department getDepartment(Integer id) {
+        if (id == null){
+            throw new IllegalArgumentException("no id provided");
+        }
+        for (Department dept : departmentList){
+            if (id.equals(dept.getDepartmentId())){
+                return dept;
+            }
+        }
+        return null;
+    }
 
 	
 	

@@ -1,6 +1,6 @@
 server:
-  context-path: /codenotfound
-  port: 9090
+  context-path: /jsfcrudspring
+  port: 9091
 
 spring:
   datasource:
