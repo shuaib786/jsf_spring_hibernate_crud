@@ -16,7 +16,7 @@ Mysql database
 
 Database
 
-Please find the dumb of database in the attahced .Please insert the values for the Department table.
+Please find the dumb of database in the attahced cnfdatabase.sql.Please insert the values for the Department table.
 ddl-auto = auto , SO tables will be created automatically .Please create the database that will like and make changes in the application.yml 
 
 # Frontend
